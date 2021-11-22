@@ -5,7 +5,7 @@ interface StepByStepProps {
     indexIdentifier: number;
     arrLength: number;
     explanation: string;
-    arr: []
+    arr: (string | number)[]
 }
 
 export const StepByStepEl: React.FC<StepByStepProps> = ({indexIdentifier, arrLength, explanation, arr}) => {
@@ -35,12 +35,12 @@ export const StepByStepEl: React.FC<StepByStepProps> = ({indexIdentifier, arrLen
   return (
     // <Waypoint onEnter={() => setToggleAnimation(true)} fireOnRapidScroll={true}>
       <motion.div
-        className="stepbystepContainer"
+        className="m-1 text-center border-b"
         variants={stepByStepContainer}
         initial="hidden"
         // animate={toggleAnimation ? "visible" : null}
       >
-        <div className="stepbystep">
+        <div className="flex justify-around p-5">
           {arr.map((x, j) => (
             <div
               className="step single-element"
@@ -55,7 +55,7 @@ export const StepByStepEl: React.FC<StepByStepProps> = ({indexIdentifier, arrLen
             </div>
           ))}
         </div>
-        <div style={{ paddingBottom: 50 }}>{explanation}</div>
+        <div className="p-5">{explanation}</div>
       </motion.div>
     // </Waypoint>
   );

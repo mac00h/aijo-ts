@@ -3,21 +3,30 @@ import { motion } from "framer-motion";
 import HomeVariants from "../MotionVariants/HomeVariants";
 import JoinNumberLetter from "../scripts/JoinNumberLetter";
 import IsValid from "../scripts/IsValid";
+import TransformToRPN from "../scripts/TransformToRPN";
+import { StepByStepEl } from "../components/StepByStep";
 
 export const RegularToRPN: React.FC = () => {
   const [equation, setEquation] = useState("");
   const [joinedEquation, setJoinedEquation] = useState<string[]>();
-  const [response, setResponse] = useState()
+  const [result, setResult] = useState<string[]>();
+  const [resultSteps, setResultSteps] = useState<(string | number)[][]>();
+  const [resultStepsExplained, setResultStepsExplained] = useState<string[]>();
+  const [resultReady, setResultReady] = useState<boolean>(false);
 
   useEffect(() => {
     setJoinedEquation(JoinNumberLetter(Array.from(equation)));
   }, [equation]);
 
   const handleTransform = () => {
-    if(IsValid(joinedEquation!, "rpn")){
-      
+    if (IsValid(joinedEquation!, "rpn")) {
+      let resp = TransformToRPN(joinedEquation!);
+      setResult(resp.wynik);
+      setResultSteps(resp.resultHistory);
+      setResultStepsExplained(resp.stepExplained);
+      setResultReady(true);
     }
-  }
+  };
 
   return (
     <motion.div
@@ -45,6 +54,28 @@ export const RegularToRPN: React.FC = () => {
         Transform Equation
         {/* {inputBlocked ? "New expression" : "Transform Equation"} */}
       </motion.button>
+
+      {resultReady && (
+        <div className="flex w-full border-b p-5 mt-20 justify-around">
+          <div>Step</div>
+          <div>Input</div>
+          <div>Stack</div>
+          <div>Output</div>
+        </div>
+      )}
+      <div className="w-full">
+        {resultReady && resultSteps!.map((e, i) => (
+          <div className="overflow-x-hidden">
+            <StepByStepEl
+              arr={e}
+              arrLength={resultSteps!.length}
+              indexIdentifier={i}
+              key={i}
+              explanation={resultStepsExplained![i]}
+            />
+          </div>
+        ))}
+      </div>
     </motion.div>
   );
 };

@@ -9,7 +9,7 @@ import { RPNToRegular } from "./routes/RPNToRegular";
 function App() {
   const location = useLocation();
   return (
-    <div className="bg-gradient-radial from-blue-500 to-indigo-900 h-screen font-main overflow-hidden">
+    <div className="bg-gradient-radial from-blue-500 to-indigo-900 min-h-screen font-main overflow-x-hidden">
       <Header currentLocation={location.pathname} />
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.key}>

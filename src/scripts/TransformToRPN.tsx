@@ -2,7 +2,7 @@ import CheckPriority from "./CheckPriority";
 import IsLetter from "./IsLetter";
 import IsOperator from "./IsOperator";
 
-const TransformToRPN = (equation) => {
+export default function TransformToRPN(equation: string[]) {
   let isPushed = false;
   let equationArray = equation;
   let output = [];
@@ -17,10 +17,10 @@ const TransformToRPN = (equation) => {
     arr.push(i + 1);
     arr.push(equationArray[i]);
 
-    if (!isNaN(equationArray[i]) || IsLetter(equationArray[i])) {
+    if (!isNaN(Number(equationArray[i])) || IsLetter(equationArray[i])) {
       output.push(equationArray[i]);
       let el = undefined;
-      !isNaN(equationArray[i]) ? (el = "number") : (el = "letter")
+      !isNaN(Number(equationArray[i])) ? (el = "number") : (el = "letter")
       stepExplained.push(`Input is ${el} so we push it to output.`)
     }
 
@@ -51,8 +51,7 @@ const TransformToRPN = (equation) => {
           stack.unshift(equationArray[i]);
           stepExplained.push('Input is operator and stack is empty so we push operator to stack.')
         } else {
-          console.log(stack[0],CheckPriority(stack[0]))
-          if(currentItemPriority > CheckPriority(stack[0])){
+          if(currentItemPriority! > CheckPriority(stack[0])!){
             stepExplained.push('Input is operator and stack is not empty.\nWe need to check priority of input operator and latest operator on stack.\nCurrent operator has higher priority than latest operator on stack so we push it to stack.');
           }else{
             stepExplained.push('Input is operator and stack is not empty.\nWe need to check priority of input operator and latest operator on stack.\nCurrent operator has lower priority than latest operator on stack so we need to move all operators with higher or equal priority from stack to output.')
@@ -61,7 +60,7 @@ const TransformToRPN = (equation) => {
           for (let h =0; h < stack.length; h++) {
             let stackPriority = CheckPriority(stack[h]);
             if (!isPushed) {
-              if (currentItemPriority > stackPriority) {
+              if (currentItemPriority! > stackPriority!) {
                 stack.unshift(equationArray[i]);
                 isPushed = true;
                 break;
@@ -114,7 +113,6 @@ const TransformToRPN = (equation) => {
   }
 
   let wynik = output.concat(stack)
-  console.log(wynik)
 
   lastStep.push(i + 2);
   lastStep.push("∅");
@@ -127,5 +125,3 @@ const TransformToRPN = (equation) => {
   let res = { wynik, resultHistory, stepExplained };
   return res;
 };
-
-export default TransformToRPN;

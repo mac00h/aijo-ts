@@ -24,5 +24,6 @@ export default function JoinNumberLetter(arr: string[]) {
   let x = stack.join("");
   result.push(x);
   stack = [];
+  console.log(result.filter((x) => x.trim().length > 0))
   return result.filter((x) => x.trim().length > 0);
 }
