@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Header } from "./components/Header";
+import { AnimatePresence } from "framer-motion";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { Home } from "./routes/Home";
+import { RegularToRPN } from "./routes/RegularToRPN";
+import { RPNToRegular } from "./routes/RPNToRegular";
 
 function App() {
+  const location = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-gradient-radial from-blue-500 to-indigo-900 h-screen font-main overflow-hidden">
+      <Header currentLocation={location.pathname} />
+      <AnimatePresence exitBeforeEnter>
+        <Routes location={location} key={location.key}>
+          <Route path="/" element={<Home />} />
+          <Route path="/regular-to-rpn" element={<RegularToRPN />} />
+          <Route path="/rpn-to-regular" element={<RPNToRegular />} />
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }
