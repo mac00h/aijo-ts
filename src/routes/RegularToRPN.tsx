@@ -2,14 +2,22 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import HomeVariants from "../MotionVariants/HomeVariants";
 import JoinNumberLetter from "../scripts/JoinNumberLetter";
+import IsValid from "../scripts/IsValid";
 
 export const RegularToRPN: React.FC = () => {
   const [equation, setEquation] = useState("");
-  const [joinedEquation, setJoinedEquation] = useState([]);
+  const [joinedEquation, setJoinedEquation] = useState<string[]>();
+  const [response, setResponse] = useState()
 
   useEffect(() => {
-    JoinNumberLetter(Array.from(equation))
+    setJoinedEquation(JoinNumberLetter(Array.from(equation)));
   }, [equation]);
+
+  const handleTransform = () => {
+    if(IsValid(joinedEquation!, "rpn")){
+      
+    }
+  }
 
   return (
     <motion.div
@@ -32,6 +40,7 @@ export const RegularToRPN: React.FC = () => {
         variants={HomeVariants.buttonVariants}
         whileHover="hover"
         className="border py-3 px-6 rounded-full mt-10"
+        onClick={() => handleTransform()}
       >
         Transform Equation
         {/* {inputBlocked ? "New expression" : "Transform Equation"} */}
