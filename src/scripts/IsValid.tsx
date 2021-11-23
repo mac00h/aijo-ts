@@ -7,7 +7,7 @@ export default function IsValid(e: string[], transformType: string) {
 
   if (expression.length > 2) {
     if (
-      transformType === "rpn"
+      transformType !== "rpn"
         ? !IsOperator(expression[expression.length - 1])
         : IsOperator(expression[expression.length - 1])
     ) {

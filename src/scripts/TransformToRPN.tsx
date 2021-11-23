@@ -7,7 +7,7 @@ export default function TransformToRPN(equation: string[]) {
   let equationArray = equation;
   let output = [];
   let stack = [];
-  let resultHistory = [];
+  let history = [];
   let i = 0;
   let stepExplained = [];
 
@@ -90,11 +90,10 @@ export default function TransformToRPN(equation: string[]) {
       let v = output.join(" ");
       arr.push(v);
     }
-    resultHistory.push(arr);
+    history.push(arr);
   }
 
   let arr = [];
-  let lastStep = [];
   arr.push(i + 1);
   arr.push("∅");
 
@@ -102,26 +101,21 @@ export default function TransformToRPN(equation: string[]) {
     arr.push("∅");
   } else {
     let v = stack.join("");
+    
     arr.push(v);
   }
 
   if (output.length === 0) {
     arr.push("∅");
   } else {
-    let v = output.join(" ");
-    arr.push(v);
+    let wynik = output.concat(stack)
+    arr.push(wynik.join(" "));
   }
 
   let wynik = output.concat(stack)
-
-  lastStep.push(i + 2);
-  lastStep.push("∅");
-  lastStep.push("∅");
-  lastStep.push(output.join(" ")+stack.join(" "));
-  resultHistory.push(arr);
-  resultHistory.push(lastStep);
+  history.push(arr);
   stepExplained.push('Last step is to take all operators from stack and push them to output.')
 
-  let res = { wynik, resultHistory, stepExplained };
+  let res = { wynik, history, stepExplained };
   return res;
 };

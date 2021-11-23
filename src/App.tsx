@@ -3,8 +3,7 @@ import { Header } from "./components/Header";
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Home } from "./routes/Home";
-import { RegularToRPN } from "./routes/RegularToRPN";
-import { RPNToRegular } from "./routes/RPNToRegular";
+import { TransformationComponent } from "./components/TransformationComponent";
 
 function App() {
   const location = useLocation();
@@ -14,8 +13,8 @@ function App() {
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.key}>
           <Route path="/" element={<Home />} />
-          <Route path="/regular-to-rpn" element={<RegularToRPN />} />
-          <Route path="/rpn-to-regular" element={<RPNToRegular />} />
+          <Route path="/regular-to-rpn" element={<TransformationComponent transformType='regular'/>} />
+          <Route path="/rpn-to-regular" element={<TransformationComponent transformType='rpn'/>} />
         </Routes>
       </AnimatePresence>
     </div>
